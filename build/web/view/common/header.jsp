@@ -606,7 +606,7 @@
                                                                                                                                                                 </ul>
                                                                                                                                                             </div>
                                                                                                                                                         </li>
-                                                                                                                                                        <li class="menu-item"><a href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3" class="item-link">Buy now</a></li>
+                                                                                                                                                        
                                                                                                                                                         </ul>
                                                                                                                                                         </nav>
                                                                                                                                                         </div>
