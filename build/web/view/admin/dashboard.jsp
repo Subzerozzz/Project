@@ -4,6 +4,7 @@
     Author     : User
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,51 +64,71 @@
         </div>
 
         <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Data Table Example
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                  <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
-
-      </div>
+         <div class="card mb-3">
+           <div class="card-header">
+             <i class="fas fa-table"></i>
+             Data Table Example
+           </div>
+           <div class="card-body">
+             <div class="table-responsive">
+               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                 <thead>
+                   <tr>
+                     <th>Id</th>
+                     <th>Name</th>
+                     <th>Price</th>
+                     <th>Image</th>
+                     <th>Stock quantity</th>
+                     <th>Category</th>
+                     <th>Action</th>
+                   </tr>
+                 </thead>
+                 <tfoot>
+                   <tr>
+                     <th>Id</th>
+                     <th>Name</th>
+                     <th>Price</th>
+                     <th>Image</th>
+                     <th>Stock quantity</th>
+                     <th>Category</th>
+                     <th>Action</th>
+                   </tr>
+                 </tfoot>
+                 <tbody>
+                   <c:forEach items="${listProduct}" var='item'>
+                    <tr>
+                        <td name="id">${item.product_id}</td>
+                        <td name="name">${item.name}</td>
+                        <td name="price">${item.price}</td>
+                        <td>
+                            <img src="${item.image}" width="100px" height="100px">
+                        </td>
+                        <td name="quantity">${item.stock_quantity}</td>
+                        <td name="category">
+                            <c:forEach items="${listCategory}" var='cate'>
+                                <c:if test="${item.category_id == cate.category_id}">
+                                    <p style="display:none">${item.category_id}</p>
+                                    ${cate.category_name}
+                                </c:if>
+                                
+                            </c:forEach>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success"
+                                    data-toggle="modal" data-target="#editProductModal" onClick="updateProductModal(this)">Edit</button>
+                            <button type="button" class="btn btn-danger"
+                                    data-toggle="modal" data-target="#delete-product-modal" onClick="deleteProductModal(${item.product_id})">Delete</button>
+                        </td>
+                    </tr>
+                </c:forEach>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+         </div>
+ 
+       </div>
       <!-- /.container-fluid -->
 
       <!-- Sticky Footer -->
@@ -126,24 +147,11 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <jsp:include page="../common/admin/logOutModal.jsp"></jsp:include>
+  
+  <jsp:include page="addProductModal.jsp"></jsp:include>
+  <jsp:include page="deleteProductModal.jsp"></jsp:include>
+  <jsp:include page="editProductModal.jsp"></jsp:include>
 
   <!-- Bootstrap core JavaScript-->
   <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
@@ -167,8 +175,13 @@
   <script src="${pageContext.request.contextPath}/js/demo/chart-area-demo.js"></script>
   <script src="${pageContext.request.contextPath}/js/colReorder-dataTables-min.js"></script>
   <script src="${pageContext.request.contextPath}/js/colReorder-bootstrap4-min.js"></script>
-
-
+  
+  
+  <style>
+   .error{
+      color:red;
+    }
+  </style>
 </body>
 
 </html>

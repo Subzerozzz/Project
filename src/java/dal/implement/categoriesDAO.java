@@ -16,12 +16,18 @@ public class categoriesDAO extends GenericDAO<categories> {
 
     @Override
     public List<categories> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return queryGenericDAO(categories.class);
     }
 
     @Override
     public int insert(categories t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public static void main(String[] args) {
+        for(categories a : new categoriesDAO().findAll()){
+            System.out.println(a.toString());
+        }
     }
     
 }

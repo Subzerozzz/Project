@@ -21,10 +21,10 @@ public class ProductDAO extends GenericDAO<Product> {
     public List<Product> findAll() {
        return queryGenericDAO(Product.class);
     }
-
+    
     @Override
     public int insert(Product t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return insertGenericDAO(t);
     }
     
     public List<Product> getDataByCategoryId(String id){
@@ -39,8 +39,6 @@ public class ProductDAO extends GenericDAO<Product> {
         return list;
     }
     
-
-
     public List<Product> getProductById(String id) {
         //Chuan bị câu lệnh sql
         String sql = "select * from dbo.Product as P\n" +
@@ -64,8 +62,6 @@ public class ProductDAO extends GenericDAO<Product> {
        return list;
     }
     
-
-
     public List<Product> getDataByCategoryIdForPagination(String id, String pageRaw) {
         int page=Integer.parseInt(pageRaw);
         //Chuan bị câu lệnh sql
@@ -85,23 +81,47 @@ public class ProductDAO extends GenericDAO<Product> {
         return list;
     }
     
-            
-    
-    public static void main(String[] args) {
-        for(Product a : new ProductDAO().getDataByCategoryIdForPagination("15" , "1")){
-            System.out.println(a.toString());
-        }
+           
+    public boolean deleteById(Integer id) {
+        String sql = "delete from dbo.Product\n" +
+                        "where product_id = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("id", id);
+        
+        return deleteGenericDAO(sql, parameterMap);
     }
 
-//    public int getTotalRecordById(String id) {
-//        String sql = "SELECT Count(*)\n" +
-//                    "FROM dbo.Product as P \n" +
-//                    "Where P.category_id=?";
-//        parameterMap = new LinkedHashMap<>();
-//        parameterMap.put("P.category_id", id);
-//        
-//        return findTotalRecordGenericDAO(Product.class, sql, parameterMap);
-//    }
+    public void updateProductById(Product newProduct) {
+        String sql = "UPDATE [dbo].[Product]\n" +
+                        "SET [name]=?\n" +
+                        ",[description]=?\n" +
+                        ",[price]=?\n" +
+                        ",[image]=?\n" +
+                        ",[stock_quantity]=?\n" +
+                        ",[category_id]=?\n" +
+                        "  WHERE product_id = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("name",newProduct.getName());
+        parameterMap.put("description",newProduct.getDescription());
+        parameterMap.put("price",newProduct.getPrice());
+        parameterMap.put("image",newProduct.getImage());
+        parameterMap.put("stock_quantity",newProduct.getStock_quantity());
+        parameterMap.put("category_id",newProduct.getCategory_id());
+        parameterMap.put("product_id",newProduct.getProduct_id());
+                
+        updateGenericDAO(sql, parameterMap);
+    }
 
-
+    public static void main(String[] args) {
+        Product newProduct = Product.builder()
+                .product_id(61)
+                .name("T-shirt8")
+                .category_id(1)
+                .stock_quantity(20)
+                .price(28.8)
+                .build();
+        new ProductDAO().updateProductById(newProduct);
+    }
 }
+
+

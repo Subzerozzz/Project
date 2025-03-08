@@ -10,4 +10,6 @@ package constant;
  */
 public class CommonConstant {
     public static final int PRO_PER_PAGE = 8;
+    public static final String SESSION_PRODUCT = "listProduct";
+    public static final String SESSION_CATEGORY = "listCategory";
 }
