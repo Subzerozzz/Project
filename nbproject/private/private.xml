@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>web/view/shop-men.jsp</url>
+            <bookmark id="1">
+                <name/>
+                <line>53</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/dal/GenericDAO.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/dal/DBContext.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/entity/Product.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/dal/implement/ProductDAO.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/homepage/home.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/controller/HomeController.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/homepage/shop-women.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/homepage/shop-men.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/entity/PageControl.java</file>
         </group>
     </open-files>
 </project-private>
