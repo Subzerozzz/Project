@@ -443,7 +443,8 @@ public abstract class GenericDAO<T> extends DBContext {
         // Trả về ID được tạo tự động (nếu có)
         return id;
     }
-
+    
+    
     protected int insertGenericDAO(String sql, Map<String, Object> parameterMap) {
         List<Object> parameters = new ArrayList<>();
 

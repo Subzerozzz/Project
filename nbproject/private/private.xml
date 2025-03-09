@@ -12,7 +12,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/homepage/home.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/common/homePage/header.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/authen/login.jsp</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/controller/authen/AuthenticationController.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/controller/homepage/HomeController.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/user/dashboard/userDashboard.jsp</file>
         </group>
     </open-files>
 </project-private>

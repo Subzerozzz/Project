@@ -3,7 +3,7 @@
     Created on : Feb 22, 2025, 3:40:36 PM
     Author     : User
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header id="header" class="header-default">
     <div class="px_15 lg-px_40">
@@ -449,9 +449,41 @@
                                                                                                                                                         </div>
                                                                                                                                                         <div class="col-xl-3 col-md-4 col-3">
                                                                                                                                                             <ul class="nav-icon d-flex justify-content-end align-items-center gap-20">
+                                                                                                                                                                
+                                                                                                                                                                <c:if test="${account != null}">
+                                                                                                                                                                    <li>
+                                                                                                                                                                        <a href="authen?action=logout" style="font-weight: 500;">Log out</a>
+                                                                                                                                                                    </li>
+                                                                                                                                                                </c:if>
+                                                                                                                                                                <c:if test="${account == null}">
+                                                                                                                                                                    <li>
+                                                                                                                                                                        <a href="authen?action=login" style="font-weight: 500;">Login</a>
+                                                                                                                                                                    </li>
+                                                                                                                                                                </c:if>
+                                                                                                                                                                    
+                                                                                                                                                                <c:if test="${account != null}">
+                                                                                                                                                                    <!--User-->
+                                                                                                                                                                    <c:if test="${account.roleid == 2}">
+                                                                                                                                                                        <li class="nav-account">
+                                                                                                                                                                            <a href="${pageContext.request.contextPath}/dashboard" class="nav-icon-item">
+                                                                                                                                                                                <i class="icon icon-account"></i>
+                                                                                                                                                                            </a>
+                                                                                                                                                                        </li>
+                                                                                                                                                                        
+                                                                                                                                                                    </c:if>
+                                                                                                                                                                    
+                                                                                                                                                                    <!--Admin-->
+                                                                                                                                                                    <c:if test="${account.roleid == 1}">
+                                                                                                                                                                        <li class="nav-account">
+                                                                                                                                                                            <a href="${pageContext.request.contextPath}/admin/dashboard" class="nav-icon-item">
+                                                                                                                                                                                <i class="icon icon-account"></i>
+                                                                                                                                                                            </a>
+                                                                                                                                                                        </li>
+                                                                                                                                                                        
+                                                                                                                                                                    </c:if>
+                                                                                                                                                                    
+                                                                                                                                                                </c:if>
                                                                                                                                                                 <li class="nav-search"><a href="#canvasSearch" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="nav-icon-item"><i class="icon icon-search"></i></a></li>
-                                                                                                                                                                <li class="nav-account"><a href="#login" data-bs-toggle="modal" class="nav-icon-item"><i class="icon icon-account"></i></a></li>
-                                                                                                                                                                <li class="nav-wishlist"><a href="wishlist.html" class="nav-icon-item"><i class="icon icon-heart"></i><span class="count-box">0</span></a></li>
                                                                                                                                                                 <li class="nav-cart"><a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item"><i class="icon icon-bag"></i><span class="count-box">0</span></a></li>
                                                                                                                                                             </ul>
                                                                                                                                                         </div>

@@ -76,7 +76,7 @@
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                 <button type="submit" class="btn btn-primary" form="addProductForm" onclick="validateForm2()">Update</button>
+                 <button type="submit" class="btn btn-primary" form="updateProductForm" >Update</button>
              </div>
          </div>
      </div>

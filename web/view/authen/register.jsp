@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : Mar 8, 2025, 10:05:15 PM
+    Document   : register
+    Created on : Mar 9, 2025, 12:42:21 PM
     Author     : User
 --%>
 
@@ -12,7 +12,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 
 
-<!-- Mirrored from themesflat.co/html/ecomus/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Feb 2025 03:24:34 GMT -->
+<!-- Mirrored from themesflat.co/html/ecomus/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Feb 2025 03:44:03 GMT -->
 <head>
     <meta charset="utf-8">
     <title>Ecomus - Ultimate HTML</title>
@@ -33,8 +33,8 @@
    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/styles.css"/>
 
     <!-- Favicon and Touch Icons  -->
-    <link rel="shortcut icon" href="images/logo/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="images/logo/favicon.png">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/logo/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/images/logo/favicon.png">
 
 </head>
 
@@ -57,58 +57,40 @@
         <!-- page-title -->
         <div class="tf-page-title style-2">
             <div class="container-full">
-                <div class="heading text-center">Log in</div>
+                <div class="heading text-center">Register</div>
             </div>
         </div>
         <!-- /page-title -->
     
         <section class="flat-spacing-10">
             <div class="container">
-                <div class="tf-grid-layout lg-col-2 tf-login-wrap">
-                    <div class="tf-login-form">
-                        <div id="recover">
-                            <h5 class="mb_24">Reset your password</h5>
-                            <p class="mb_30">We will send you an email to reset your password</p>
-                            <div>
-                                <form class="" id="login-form" action="#" method="post" accept-charset="utf-8" data-mailchimp="true">
-                                    <div class="tf-field style-1 mb_15">
-                                        <input class="tf-field-input tf-input" placeholder="" type="email" id="property3" name="email">
-                                        <label class="tf-field-label fw-4 text_black-2" for="property3">Email *</label>
-                                    </div>
-                                    <div class="mb_20">
-                                        <a href="#login" class="tf-btn btn-line">Cancel</a>
-                                    </div>
-                                    <div class="">
-                                        <button type="submit" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center">Reset password</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div id="login">
-                            <h5 class="mb_36">Log in</h5>
-                            <div>
-                                <form class="" id="login-form" action="authen?action=login" method="POST" accept-charset="utf-8">
-                                    <div class="tf-field style-1 mb_15">
-                                        <input style="color:black" type="text" name="username" placeholder="Username">
-                                    </div>
-                                    <div class="tf-field style-1 mb_30">
-                                        <input style="color:black" type="password"  name="password" placeholder="Password">
-                                    </div>
-                                    <div class="mb_20">
-                                        <a href="#recover" class="tf-btn btn-line">Forgot your password?</a>
-                                    </div>
-                                    <div class="">
-                                        <input type="submit" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center" value="Login"/>
-                                    </div>
-                                    <span style="color:red;">${error}</span>
-                                </form>
-                            </div>
-                        </div>
+                <div class="form-register-wrap">
+                    <div class="flat-title align-items-start gap-0 mb_30 px-0">
+                        <h5 class="mb_18">Register</h5>
+                        <p class="text_black-2">Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails</p>
                     </div>
-                    <div class="tf-login-content">
-                        <h5 class="mb_36">I'm new here</h5>
-                        <p class="mb_20">Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails.</p>
-                        <a href="authen?action=register" style="font-weight: 700">Register</a>
+                    <div>
+                        <form id="register-form" action="authen?action=register" method="POST" accept-charset="utf-8" data-mailchimp="true">
+                            <div class="tf-field style-1 mb_15">
+                                <input style="color: black" placeholder="Username" type="text" name="username">
+                            </div>
+                            <div class="tf-field style-1 mb_15">
+                                <input style="color: black" placeholder="Password" type="password" name="password">
+                            </div>
+                            <div class="tf-field style-1 mb_15">
+                                <input style="color: black" placeholder="Email" type="email" name="email">
+                            </div>
+                            <div class="tf-field style-1 mb_30">
+                                <input style="color: black" placeholder="Address" type="text"  name="address">
+                            </div>
+                            <div class="mb_20">
+                                <input type="submit" value="Register" class="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center">
+                            </div>
+                            <span style="color: red">${error}</span>
+                            <div class="text-center">
+                                <a href="authen?action=login" class="tf-btn btn-line">Already have an account? Log in here<i class="icon icon-arrow1-top-left"></i></a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -118,7 +100,7 @@
         <!-- Footer -->
         <jsp:include page="../common/homePage/footer.jsp"></jsp:include>
         <!-- /Footer -->
-
+     
     </div>
 
     <!-- gotop -->
@@ -176,9 +158,8 @@
         </div>
     </div>
     <!-- /toolbar-bottom -->
-
     <!-- modalDemo -->
-<!--    <div class="modal fade modalDemo" id="modalDemo">
+    <div class="modal fade modalDemo" id="modalDemo">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="header">
@@ -618,9 +599,8 @@
                 
             </div> 
         </div>
-    </div>-->
+    </div>
     <!-- /modalDemo -->
-
     <!-- mobile menu -->
     <div class="offcanvas offcanvas-start canvas-mb" id="mobileMenu">
         <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
@@ -934,7 +914,7 @@
     </div>
     <!-- /mobile menu -->
 
-
+ 
 
     <!-- canvasSearch -->
     <jsp:include page="../common/homePage/canvas-search.jsp"></jsp:include>
@@ -1142,6 +1122,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/lazysize.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/count-down.js"></script>   
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/wow.min.js"></script>   
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/wow.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/multiple-modal.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/main.js"></script>
 
@@ -1168,5 +1150,5 @@
 </body>
 
 
-<!-- Mirrored from themesflat.co/html/ecomus/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Feb 2025 03:24:34 GMT -->
+<!-- Mirrored from themesflat.co/html/ecomus/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Feb 2025 03:44:03 GMT -->
 </html>
