@@ -484,7 +484,12 @@
                                                                                                                                                                     
                                                                                                                                                                 </c:if>
                                                                                                                                                                 <li class="nav-search"><a href="#canvasSearch" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="nav-icon-item"><i class="icon icon-search"></i></a></li>
-                                                                                                                                                                <li class="nav-cart"><a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item"><i class="icon icon-bag"></i><span class="count-box">0</span></a></li>
+                                                                                                                                                                <li class="nav-cart">
+                                                                                                                                                                    <a href="payment" class="nav-icon-item">
+                                                                                                                                                                        <i class="icon icon-bag"></i>
+                                                                                                                                      
+                                                                                                                                                                    </a>
+                                                                                                                                                                </li>
                                                                                                                                                             </ul>
                                                                                                                                                         </div>
                                                                                                                                                         </div>

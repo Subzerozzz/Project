@@ -111,6 +111,7 @@ public class UserFilter implements Filter {
         Account account = (Account) session.getAttribute(CommonConstant.SESSION_ACCOUNT);
         if(account == null){
             resp.sendRedirect(req.getContextPath() + "/authen?action=login");
+            return;
         }
         doBeforeProcessing(request, response);
         
