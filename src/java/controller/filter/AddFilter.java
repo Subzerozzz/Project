@@ -1,11 +1,9 @@
-   /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Filter.java to edit this template
  */
 package controller.filter;
 
-import constant.CommonConstant;
-import entity.Account;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -22,9 +20,10 @@ import java.io.StringWriter;
 
 /**
  *
+ * 
  * @author User
  */
-public class AdminFilter implements Filter {
+public class AddFilter implements Filter {
     
     private static final boolean debug = true;
 
@@ -33,13 +32,13 @@ public class AdminFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public AdminFilter() {
+    public AddFilter() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AdminFilter:DoBeforeProcessing");
+            log("AddFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -67,7 +66,7 @@ public class AdminFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AdminFilter:DoAfterProcessing");
+            log("AddFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -103,23 +102,16 @@ public class AdminFilter implements Filter {
             throws IOException, ServletException {
         
         if (debug) {
-            log("AdminFilter:doFilter()");
+            log("AddFilter:doFilter()");
         }
         
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        //check xem dang nhap chua(ktra xem account da ton tai tren session chua)
-        if(session.getAttribute(CommonConstant.SESSION_ACCOUNT) == null){
+        if(session.getAttribute("account") == null){
             resp.sendRedirect(req.getContextPath() + "/authen?action=login");
+            return;
         }
-        else{
-            Account account = (Account) session.getAttribute(CommonConstant.SESSION_ACCOUNT);
-            if(account.getRoleid() != 1){
-                resp.sendRedirect(req.getContextPath() + "/authen?action=login");
-            }
-        }
-        
         
         doBeforeProcessing(request, response);
         
@@ -178,7 +170,7 @@ public class AdminFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("AdminFilter:Initializing filter");
+                log("AddFilter:Initializing filter");
             }
         }
     }
@@ -189,9 +181,9 @@ public class AdminFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AdminFilter()");
+            return ("AddFilter()");
         }
-        StringBuffer sb = new StringBuffer("AdminFilter(");
+        StringBuffer sb = new StringBuffer("AddFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

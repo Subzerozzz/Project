@@ -475,7 +475,7 @@
                             </div>
                         </c:forEach>
                         <!--pagination-->
-                        <ul class="wg-pagination tf-pagination-list">
+<!--                        <ul class=" tf-pagination-list">  
                             <c:forEach begin="1" end="${pageControlSearch.totalPage}" var="pageNumber">
                                 <li class="">
                                     <a href="${pageControlSearch.urlPattern}page=${pageNumber}" class="pagination-link">${pageNumber}</a>
@@ -487,7 +487,7 @@
                                 </a>
                             </li>
 
-                        </ul>
+                        </ul>-->
                     </div>
                     
                 </div>

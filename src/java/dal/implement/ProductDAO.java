@@ -62,6 +62,24 @@ public class ProductDAO extends GenericDAO<Product> {
        return list;
     }
     
+    public List<Product> getDataBySearchForPagination(String keyword,String pageRaw) {
+        int page=Integer.parseInt(pageRaw);
+//       String sql = "SELECT * FROM Product WHERE name LIKE ?";
+       String sql = "SELECT * \n" +
+                    "FROM dbo.Product as P \n" +
+                    "WHERE name LIKE ?\n" +
+                    "order by P.product_id \n" +
+                    "offset ? rows\n" +
+                    "fetch next ? rows only";
+       //Chuẩn bị PrameterMap
+       parameterMap = new LinkedHashMap<>();
+       parameterMap.put("name","%" + keyword + "%");
+       parameterMap.put("offset", (page - 1) * commonConstant.PRO_PER_PAGE);
+       parameterMap.put("fetch", commonConstant.PRO_PER_PAGE);
+       List<Product> list = queryGenericDAO(Product.class , sql, parameterMap);
+       return list;
+    }
+    
     public List<Product> getDataByCategoryIdForPagination(String id, String pageRaw) {
         int page=Integer.parseInt(pageRaw);
         //Chuan bị câu lệnh sql

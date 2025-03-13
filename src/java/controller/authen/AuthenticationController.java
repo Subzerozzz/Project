@@ -6,13 +6,17 @@ package controller.authen;
 
 import constant.CommonConstant;
 import dal.implement.AccountDAO;
+import dal.implement.CartDAO;
 import entity.Account;
+import entity.Cart;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *
@@ -20,8 +24,9 @@ import java.io.PrintWriter;
  */
 public class AuthenticationController extends HttpServlet {
     AccountDAO accountDao = new AccountDAO();
-
- 
+    
+    
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -92,6 +97,7 @@ public class AuthenticationController extends HttpServlet {
     }
 
     private String register(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
         String url=null;
         //lấy ra các giá trị mà người dùng gửi lên
         String username = request.getParameter("username").trim();
@@ -108,8 +114,7 @@ public class AuthenticationController extends HttpServlet {
         //neu da ton tai, quay lại trang reigter và báo lỗi
         if(accountByFindUsername != null){
             request.setAttribute("error", "Username existed");
-            url = "view/authen/register.jsp";
-            
+            url = "view/authen/register.jsp"; 
         }else{
             //Đóng thành 1 đối tượng Account
             Account newAccount = Account.builder()
@@ -120,11 +125,13 @@ public class AuthenticationController extends HttpServlet {
                     .build();
             accountDao.insert(newAccount);
             request.getSession().setAttribute(CommonConstant.SESSION_ACCOUNT, newAccount);
+            //tao 1 cart tuong ung voi tk vua duoc dang ky
             url = "home";
         }
 
         return url;
     }
+
 
 
 

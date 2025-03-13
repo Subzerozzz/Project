@@ -487,7 +487,7 @@
                                                                                                                                                                 <li class="nav-cart">
                                                                                                                                                                     <a href="payment" class="nav-icon-item">
                                                                                                                                                                         <i class="icon icon-bag"></i>
-                                                                                                                                      
+                                                                                                                                                                        
                                                                                                                                                                     </a>
                                                                                                                                                                 </li>
                                                                                                                                                             </ul>

@@ -905,7 +905,7 @@ var totalVariant = function () {
   $(".tf-variant-item,.tf-cart-item").each(function () {
     var productItem = $(this);
     var basePrice = parseFloat(productItem.find(".tf-variant-item-price .price").data("base-price")) || parseFloat(productItem.find(".tf-variant-item-price .price").text().replace("$", ""));
-    var quantityInput = productItem.find("input");
+    var quantityInput = productItem.find("input[name='quantity']");
 
     productItem.find(".color-btn, .size-btn").on("click", function () {
       var newPrice = parseFloat($(this).data("price")) || basePrice;
@@ -929,6 +929,7 @@ var totalVariant = function () {
         updateTotalPrice(null, productItem);
       }
     });
+    
 
     function updateTotalPrice(price, scope) {
       var currentPrice = price || parseFloat(scope.find(".tf-variant-item-price .price").text().replace("$", ""));

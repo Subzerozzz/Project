@@ -46,7 +46,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("listProduct", productDao.findAll());
+        session.setAttribute(CommonConstant.SESSION_PRODUCT, productDao.findAll());
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         switch (action) {
             case "":

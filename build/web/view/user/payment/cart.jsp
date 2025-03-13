@@ -80,7 +80,7 @@
                 </div>
                 <div class="tf-page-cart-wrap">
                     <div class="tf-page-cart-item">
-                        <form>
+                        
                             <table class="tf-table-page-cart">
                                 <thead>
                                     <tr>
@@ -91,16 +91,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${cart.listOrderDetails}" var="od">
+                                    
+                                    <c:forEach items="${listCartItem}" var="od">
+                                        
                                         <c:forEach items="${listProduct}" var="item">
-                                            <c:if test="${od.productId == item.product_id}">
-                                                <tr class="tf-cart-item file-delete">
+                                           
+                                            <c:if test="${od.productID == item.product_id}">
+                                                <c:set var="p" value="${item}"></c:set>
+                                            </c:if>
+                                        </c:forEach>
+                                                    <tr class="tf-cart-item file-delete">
                                                         <td class="tf-cart-item_product">
                                                             <a href="product-detail.html" class="img-box">
-                                                                <img src="${item.image}" alt="img-product">
+                                                                <img src="${p.image}" alt="img-product">
                                                             </a>
                                                             <div class="cart-info">
-                                                                <a href="product-detail.html" class="cart-title link">${item.name}</a>
+                                                                <a href="product-detail.html" class="cart-title link">${p.name}</a>
                                                             </div>
                                                         </td>
                                                         <td class="tf-cart-item_price tf-variant-item-price" cart-data-title="Price">
@@ -109,13 +115,17 @@
                                                         <td class="tf-cart-item_quantity" cart-data-title="Quantity">
                                                             <div class="cart-quantity">
                                                                 <div class="wg-quantity">
-                                                                    <span class="btn-quantity btndecrease">
+                                                                    <span class="btn-quantity decrease">
                                                                         <svg class="d-inline-block" width="9" height="1" viewBox="0 0 9 1" fill="currentColor">
                                                                             <path d="M9 1H5.14286H3.85714H0V1.50201e-05H3.85714L5.14286 0L9 1.50201e-05V1Z"></path>
                                                                         </svg>
                                                                     </span>
-                                                                    <input type="text" name="number" value="${od.quantity}">
-                                                                    <span class="btn-quantity btnincrease">
+                                                                    <form action="payment?action=change-quantity" method="POST">
+                                                                        <input type="hidden" name="id" value="${p.product_id}"/>
+                                                                        <input type="text" name="quantity" value="${od.quantity}" onchange="return this.closest('form').submit()">
+                                                                    </form>
+                                                                    
+                                                                    <span class="btn-quantity increase">
                                                                         <svg class="d-inline-block" width="9" height="9" viewBox="0 0 9 9" fill="currentColor">
                                                                             <path d="M9 5.14286H5.14286V9H3.85714V5.14286H0V3.85714H3.85714V0H5.14286V3.85714H9V5.14286Z"></path>
                                                                         </svg>
@@ -124,12 +134,12 @@
                                                             </div>
                                                         </td>
                                                         <td class="tf-cart-item_total tf-variant-item-total" cart-data-title="Total">
-                                                            <div class="cart-total price">$18.00</div>
+                                                            <div class="cart-total price">$${od.quantity * p.price}</div>
+                                                            <input type="hidden" class="cart-total" value="${od.quantity * p.price}"/>
                                                         </td>
                                                     </tr>
-                                            </c:if>
-                                        </c:forEach>
                                     </c:forEach>
+                                    
                                     
                                 </tbody>
                             </table>
@@ -137,7 +147,7 @@
                                 <label for="cart-note">Add Order Note</label>
                                 <textarea name="note" id="cart-note" placeholder="How can we help you?"></textarea>
                             </div>
-                        </form>
+                        
                     </div>
                     <div class="tf-page-cart-footer">
                         <div class="tf-cart-footer-inner">
@@ -215,8 +225,8 @@
                                     </label>
                                 </div>
                                 <div class="tf-cart-totals-discounts">
-                                    <h3>Subtotal</h3>
-                                    <span class="total-value">$18.00 USD</span>
+                                    <h3>Total</h3>
+                                    <span class="total-value"></span>
                                 </div>
                                 <p class="tf-cart-tax">
                                     Taxes and <a href="shipping-delivery.html">shipping</a>  calculated at checkout
@@ -412,358 +422,6 @@
         </section>
         <!-- /Testimonial -->
 
-        <!-- product -->
-        <section class="flat-spacing-17 pt_0">
-            <div class="container">
-                <div class="flat-title">
-                    <span class="title">You may also like</span>
-                </div>
-                <div class="hover-sw-nav hover-sw-2">
-                    <div dir="ltr" class="swiper tf-sw-product-sell wrap-sw-over" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="15" data-pagination="2" data-pagination-md="3" data-pagination-lg="3">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" lazy="true">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="images/products/orange-1.jpg" src="images/products/orange-1.jpg" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="images/products/white-1.jpg" src="images/products/white-1.jpg" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="#quick_add" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
-                                                <span class="icon icon-bag"></span>
-                                                <span class="tooltip">Quick Add</span>
-                                            </a>
-                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
-                                                <span class="icon icon-delete"></span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                                <span class="icon icon-compare"></span>
-                                                <span class="tooltip">Add to Compare</span>
-                                                <span class="icon icon-check"></span>
-                                            </a>
-                                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
-                                                <span class="icon icon-view"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="size-list">
-                                            <span>S</span>
-                                            <span>M</span>
-                                            <span>L</span>
-                                            <span>XL</span>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Ribbed Tank Top</a>
-                                        <span class="price">$16.95</span>
-                                        <ul class="list-color-product">
-                                            <li class="list-color-item color-swatch active">
-                                                <span class="tooltip">Orange</span>
-                                                <span class="swatch-value bg_orange-3"></span>
-                                                <img class="lazyload" data-src="images/products/orange-1.jpg" src="images/products/orange-1.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Black</span>
-                                                <span class="swatch-value bg_dark"></span>
-                                                <img class="lazyload" data-src="images/products/black-1.jpg" src="images/products/black-1.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">White</span>
-                                                <span class="swatch-value bg_white"></span>
-                                                <img class="lazyload" data-src="images/products/white-1.jpg" src="images/products/white-1.jpg" alt="image-product">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" lazy="true">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="images/products/brown.jpg" src="images/products/brown.jpg" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="images/products/purple.jpg" src="images/products/purple.jpg" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="#quick_add" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
-                                                <span class="icon icon-bag"></span>
-                                                <span class="tooltip">Quick Add</span>
-                                            </a>
-                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
-                                                <span class="icon icon-delete"></span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                                <span class="icon icon-compare"></span>
-                                                <span class="tooltip">Add to Compare</span>
-                                                <span class="icon icon-check"></span>
-                                            </a>
-                                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
-                                                <span class="icon icon-view"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="size-list">
-                                            <span>M</span>
-                                            <span>L</span>
-                                            <span>XL</span>
-                                        </div>
-                                        <div class="on-sale-wrap">
-                                            <div class="on-sale-item">-33%</div>
-                                        </div>
-                                        <div class="countdown-box">
-                                            <div class="js-countdown" data-timer="1007500" data-labels="d :,h :,m :,s"></div>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Ribbed modal T-shirt</a>
-                                        <span class="price">From $18.95</span>
-                                        <ul class="list-color-product">
-                                            <li class="list-color-item color-swatch active">
-                                                <span class="tooltip">Brown</span>
-                                                <span class="swatch-value bg_brown"></span>
-                                                <img class="lazyload" data-src="images/products/brown.jpg" src="images/products/brown.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Light Purple</span>
-                                                <span class="swatch-value bg_purple"></span>
-                                                <img class="lazyload" data-src="images/products/purple.jpg" src="images/products/purple.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Light Green</span>
-                                                <span class="swatch-value bg_light-green"></span>
-                                                <img class="lazyload" data-src="images/products/green.jpg" src="images/products/green.jpg" alt="image-product">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" lazy="true">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="images/products/white-3.jpg" src="images/products/white-3.jpg" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="images/products/white-4.jpg" src="images/products/white-4.jpg" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="#shoppingCart" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
-                                                <span class="icon icon-bag"></span>
-                                                <span class="tooltip">Add to cart</span>
-                                            </a>
-                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
-                                                <span class="icon icon-delete"></span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                                <span class="icon icon-compare"></span>
-                                                <span class="tooltip">Add to Compare</span>
-                                                <span class="icon icon-check"></span>
-                                            </a>
-                                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
-                                                <span class="icon icon-view"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="size-list">
-                                            <span>S</span>
-                                            <span>M</span>
-                                            <span>L</span>
-                                            <span>XL</span>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Oversized Printed T-shirt</a>
-                                        <span class="price">$10.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" lazy="true">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="images/products/white-2.jpg" src="images/products/white-2.jpg" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="images/products/pink-1.jpg" src="images/products/pink-1.jpg" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <a href="#quick_add" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
-                                                <span class="icon icon-bag"></span>
-                                                <span class="tooltip">Quick Add</span>
-                                            </a>
-                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
-                                                <span class="icon icon-delete"></span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                                <span class="icon icon-compare"></span>
-                                                <span class="tooltip">Add to Compare</span>
-                                                <span class="icon icon-check"></span>
-                                            </a>
-                                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
-                                                <span class="icon icon-view"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                        <div class="size-list">
-                                            <span>S</span>
-                                            <span>M</span>
-                                            <span>L</span>
-                                            <span>XL</span>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title">Oversized Printed T-shirt</a>
-                                        <span class="price">$16.95</span>
-                                        <ul class="list-color-product">
-                                            <li class="list-color-item color-swatch active">
-                                                <span class="tooltip">White</span>
-                                                <span class="swatch-value bg_white"></span>
-                                                <img class="lazyload" data-src="images/products/white-2.jpg" src="images/products/white-2.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Pink</span>
-                                                <span class="swatch-value bg_purple"></span>
-                                                <img class="lazyload" data-src="images/products/pink-1.jpg" src="images/products/pink-1.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Black</span>
-                                                <span class="swatch-value bg_dark"></span>
-                                                <img class="lazyload" data-src="images/products/black-2.jpg" src="images/products/black-2.jpg" alt="image-product">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" lazy="true">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="images/products/brown-2.jpg" src="images/products/brown-2.jpg" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="images/products/brown-3.jpg" src="images/products/brown-3.jpg" alt="image-product">
-                                        </a>
-                                        <div class="size-list">
-                                            <span>S</span>
-                                            <span>M</span>
-                                            <span>L</span>
-                                            <span>XL</span>
-                                        </div>
-                                        <div class="list-product-btn">
-                                            <a href="#quick_add" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
-                                                <span class="icon icon-bag"></span>
-                                                <span class="tooltip">Quick Add</span>
-                                            </a>
-                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
-                                                <span class="icon icon-delete"></span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                                <span class="icon icon-compare"></span>
-                                                <span class="tooltip">Add to Compare</span>
-                                                <span class="icon icon-check"></span>
-                                            </a>
-                                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
-                                                <span class="icon icon-view"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">V-neck linen T-shirt</a>
-                                        <span class="price">$114.95</span>
-                                        <ul class="list-color-product">
-                                            <li class="list-color-item color-swatch active">
-                                                <span class="tooltip">Brown</span>
-                                                <span class="swatch-value bg_brown"></span>
-                                                <img class="lazyload" data-src="images/products/brown-2.jpg" src="images/products/brown-2.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">White</span>
-                                                <span class="swatch-value bg_white"></span>
-                                                <img class="lazyload" data-src="images/products/white-5.jpg" src="images/products/white-5.jpg" alt="image-product">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide" lazy="true">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper">
-                                        <a href="product-detail.html" class="product-img">
-                                            <img class="lazyload img-product" data-src="images/products/light-green-1.jpg" src="images/products/light-green-1.jpg" alt="image-product">
-                                            <img class="lazyload img-hover" data-src="images/products/light-green-2.jpg" src="images/products/light-green-2.jpg" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn absolute-2">
-                                            <a href="#quick_add" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
-                                                <span class="icon icon-bag"></span>
-                                                <span class="tooltip">Quick Add</span>
-                                            </a>
-                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
-                                                <span class="icon icon-delete"></span>
-                                            </a>
-                                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                                <span class="icon icon-compare"></span>
-                                                <span class="tooltip">Add to Compare</span>
-                                                <span class="icon icon-check"></span>
-                                            </a>
-                                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
-                                                <span class="icon icon-view"></span>
-                                                <span class="tooltip">Quick View</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a href="product-detail.html" class="title link">Loose Fit Sweatshirt</a>
-                                        <span class="price">$10.00</span>
-                                        <ul class="list-color-product">
-                                            <li class="list-color-item color-swatch active">
-                                                <span class="tooltip">Light Green</span>
-                                                <span class="swatch-value bg_light-green"></span>
-                                                <img class="lazyload" data-src="images/products/light-green-1.jpg" src="images/products/light-green-1.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Black</span>
-                                                <span class="swatch-value bg_dark"></span>
-                                                <img class="lazyload" data-src="images/products/black-3.jpg" src="images/products/black-3.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Blue</span>
-                                                <span class="swatch-value bg_blue-2"></span>
-                                                <img class="lazyload" data-src="images/products/blue.jpg" src="images/products/blue.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Dark Blue</span>
-                                                <span class="swatch-value bg_dark-blue"></span>
-                                                <img class="lazyload" data-src="images/products/dark-blue.jpg" src="images/products/dark-blue.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">White</span>
-                                                <span class="swatch-value bg_white"></span>
-                                                <img class="lazyload" data-src="images/products/white-6.jpg" src="images/products/white-6.jpg" alt="image-product">
-                                            </li>
-                                            <li class="list-color-item color-swatch">
-                                                <span class="tooltip">Light Grey</span>
-                                                <span class="swatch-value bg_light-grey"></span>
-                                                <img class="lazyload" data-src="images/products/light-grey.jpg" src="images/products/light-grey.jpg" alt="image-product">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nav-sw nav-next-slider nav-next-product box-icon w_46 round"><span class="icon icon-arrow-left"></span></div>
-                    <div class="nav-sw nav-prev-slider nav-prev-product box-icon w_46 round"><span class="icon icon-arrow-right"></span></div>
-                    <div class="sw-dots style-2 sw-pagination-product justify-content-center"></div>
-                </div>
-            </div>
-        </section>
-        <!-- /product -->
 
         <!-- footer -->
         <jsp:include page="../../common/homePage/footer.jsp"></jsp:include>
@@ -1780,488 +1438,6 @@
     </div>
     <!-- /toolbarShopmb -->
 
-    <!-- modal login -->
-    <div class="modal modalCentered fade form-sign-in modal-part-content" id="login">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="header">
-                    <div class="demo-title">Log in</div>
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                </div>
-                <div class="tf-login-form">
-                    <form class="" action="https://themesflat.co/html/ecomus/my-account.html" accept-charset="utf-8">
-                        <div class="tf-field style-1">
-                            <input class="tf-field-input tf-input" placeholder=" " type="email"  name="">
-                            <label class="tf-field-label" for="">Email *</label>
-                        </div>
-                        <div class="tf-field style-1">
-                            <input class="tf-field-input tf-input" placeholder=" " type="password"  name="">
-                            <label class="tf-field-label" for="">Password *</label>
-                        </div>
-                        <div>
-                            <a href="#forgotPassword" data-bs-toggle="modal" class="btn-link link">Forgot your password?</a>
-                        </div>
-                        <div class="bottom"> 
-                            <div class="w-100">
-                                <button type="submit" class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>Log in</span></button>
-                            </div>
-                            <div class="w-100">
-                                <a href="#register" data-bs-toggle="modal" class="btn-link fw-6 w-100 link">
-                                    New customer? Create your account
-                                    <i class="icon icon-arrow1-top-left"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal modalCentered fade form-sign-in modal-part-content" id="forgotPassword">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="header">
-                    <div class="demo-title">Reset your password</div>
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                </div>
-                <div class="tf-login-form">
-                    <form class="">
-                        <div>
-                            <p>Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails</p>
-                        </div>
-                        <div class="tf-field style-1">
-                            <input class="tf-field-input tf-input" placeholder=" " type="email"  name="">
-                            <label class="tf-field-label" for="">Email *</label>
-                        </div>
-                        <div>
-                            <a href="#login" data-bs-toggle="modal" class="btn-link link">Cancel</a>
-                        </div>
-                        <div class="bottom"> 
-                            <div class="w-100">
-                                <button type="submit" class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>Reset password</span></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal modalCentered fade form-sign-in modal-part-content" id="register">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="header">
-                    <div class="demo-title">Register</div>
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                </div>
-                <div class="tf-login-form">
-                    <form class="">
-                        <div class="tf-field style-1">
-                            <input class="tf-field-input tf-input" placeholder=" " type="text"  name="">
-                            <label class="tf-field-label" for="">First name</label>
-                        </div>
-                        <div class="tf-field style-1">
-                            <input class="tf-field-input tf-input" placeholder=" " type="text"  name="">
-                            <label class="tf-field-label" for="">Last name</label>
-                        </div>
-                        <div class="tf-field style-1">
-                            <input class="tf-field-input tf-input" placeholder=" " type="email"  name="">
-                            <label class="tf-field-label" for="">Email *</label>
-                        </div>
-                        <div class="tf-field style-1">
-                            <input class="tf-field-input tf-input" placeholder=" " type="password"  name="">
-                            <label class="tf-field-label" for="">Password *</label>
-                        </div>
-                        <div class="bottom"> 
-                            <div class="w-100">
-                                <a href="register.html" class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>Register</span></a>
-                            </div>
-                            <div class="w-100">
-                                <a href="#login" data-bs-toggle="modal" class="btn-link fw-6 w-100 link">
-                                    Already have an account? Log in here
-                                    <i class="icon icon-arrow1-top-left"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /modal login -->
-    <!-- modal compare -->
-    <div class="offcanvas offcanvas-bottom canvas-compare" id="compare">
-        <div class="canvas-wrapper">
-            <header class="canvas-header">
-                <div class="close-popup">
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
-                </div>
-            </header>
-            <div class="canvas-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="tf-compare-list">
-                                <div class="tf-compare-head">
-                                    <div class="title">Compare Products</div>
-                                </div>
-                                <div class="tf-compare-offcanvas">
-                                    <div class="tf-compare-item">
-                                        <div class="position-relative">
-                                            <div class="icon">
-                                                <i class="icon-close"></i>
-                                            </div>
-                                            <a href="product-detail.html">
-                                                <img class="radius-3" src="images/products/orange-1.jpg" alt="">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="tf-compare-item">
-                                        <div class="position-relative">
-                                            <div class="icon">
-                                                <i class="icon-close"></i>
-                                            </div>
-                                            <a href="product-detail.html">
-                                                <img class="radius-3" src="images/products/pink-1.jpg" alt="">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tf-compare-buttons">
-                                    <div class="tf-compare-buttons-wrap">
-                                        <a href="compare.html" class="tf-btn radius-3 btn-fill justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn ">Compare</a>
-                                        <div class="tf-compapre-button-clear-all link">
-                                            Clear All
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>       
-    </div>
-    <!-- /modal compare -->
-    
-    <!-- modal quick_add -->
-    <div class="modal fade modalDemo" id="quick_add">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="header">
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                </div>
-                <div class="wrap">
-                    <div class="tf-product-info-item">
-                        <div class="image">
-                            <img src="images/products/orange-1.jpg" alt="">
-                        </div>
-                        <div class="content">
-                            <a href="product-detail.html">Ribbed Tank Top</a>
-                            <div class="tf-product-info-price">
-                                <!-- <div class="price-on-sale">$8.00</div>
-                                <div class="compare-at-price">$10.00</div>
-                                <div class="badges-on-sale"><span>20</span>% OFF</div> -->
-                                <div class="price">$18.00</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tf-product-info-variant-picker mb_15">
-                        <div class="variant-picker-item">
-                            <div class="variant-picker-label">
-                                Color: <span class="fw-6 variant-picker-label-value">Orange</span>
-                            </div>
-                            <div class="variant-picker-values">
-                                <input id="values-orange" type="radio" name="color" checked>
-                                <label class="hover-tooltip radius-60" for="values-orange" data-value="Orange">
-                                    <span class="btn-checkbox bg-color-orange"></span>
-                                    <span class="tooltip">Orange</span>
-                                </label>
-                                <input id="values-black" type="radio" name="color">
-                                <label class=" hover-tooltip radius-60" for="values-black" data-value="Black">
-                                    <span class="btn-checkbox bg-color-black"></span>
-                                    <span class="tooltip">Black</span>
-                                </label>
-                                <input id="values-white" type="radio" name="color">
-                                <label class="hover-tooltip radius-60" for="values-white" data-value="White">
-                                    <span class="btn-checkbox bg-color-white"></span>
-                                    <span class="tooltip">White</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="variant-picker-item">
-                            <div class="variant-picker-label">
-                                Size: <span class="fw-6 variant-picker-label-value">S</span>
-                            </div>
-                            <div class="variant-picker-values">
-                                <input type="radio" name="size" id="values-s" checked>
-                                <label class="style-text" for="values-s" data-value="S">
-                                    <p>S</p>
-                                </label>
-                                <input type="radio" name="size" id="values-m">
-                                <label class="style-text" for="values-m" data-value="M">
-                                    <p>M</p>
-                                </label>
-                                <input type="radio" name="size" id="values-l">
-                                <label class="style-text" for="values-l" data-value="L">
-                                    <p>L</p>
-                                </label>
-                                <input type="radio" name="size" id="values-xl">
-                                <label class="style-text" for="values-xl" data-value="XL">
-                                    <p>XL</p>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tf-product-info-quantity mb_15">
-                        <div class="quantity-title fw-6">Quantity</div>
-                        <div class="wg-quantity">
-                            <span class="btn-quantity minus-btn">-</span>
-                            <input type="text" name="number" value="1">
-                            <span class="btn-quantity plus-btn">+</span>
-                        </div>
-                    </div>
-                    <div class="tf-product-info-buy-button">
-                        <form class="">
-                            <a href="javascript:void(0);" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart"><span>Add to cart -&nbsp;</span><span class="tf-qty-price">$18.00</span></a>
-                            <div class="tf-product-btn-wishlist btn-icon-action">
-                                <i class="icon-heart"></i>
-                                <i class="icon-delete"></i>
-                            </div>
-                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="tf-product-btn-wishlist box-icon bg_white compare btn-icon-action">
-                                <span class="icon icon-compare"></span>
-                                <span class="icon icon-check"></span>
-                            </a>
-                            <div class="w-100">
-                                <a href="#" class="btns-full">Buy with <img src="images/payments/paypal.png" alt=""></a>
-                                <a href="#" class="payment-more-option">More payment options</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /modal quick_add -->
-
-    <!-- modal quick_view -->
-    <div class="modal fade modalDemo" id="quick_view">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="header">
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                </div>
-                <div class="wrap">
-                    <div class="tf-product-media-wrap">
-                        <div dir="ltr" class="swiper tf-single-slide">
-                            <div class="swiper-wrapper" >
-                                <div class="swiper-slide">
-                                    <div class="item">
-                                        <img src="images/products/orange-1.jpg" alt="">
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="item">
-                                        <img src="images/products/pink-1.jpg" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-button-next button-style-arrow single-slide-prev"></div>
-                            <div class="swiper-button-prev button-style-arrow single-slide-next"></div>
-                        </div>
-                    </div>
-                    <div class="tf-product-info-wrap position-relative">
-                        <div class="tf-product-info-list">
-                            <div class="tf-product-info-title">
-                                <h5><a class="link" href="product-detail.html">Ribbed Tank Top</a></h5>
-                            </div>
-                            <div class="tf-product-info-badges">
-                                <div class="badges text-uppercase">Best seller</div>
-                                <div class="product-status-content">
-                                    <i class="icon-lightning"></i>
-                                    <p class="fw-6">Selling fast! 48 people have this in their carts.</p>
-                                </div>
-                            </div>
-                            <div class="tf-product-info-price">
-                                <div class="price">$18.00</div>
-                            </div>
-                            <div class="tf-product-description">
-                                <p>Nunc arcu faucibus a et lorem eu a mauris adipiscing conubia ac aptent ligula facilisis a auctor habitant parturient a a.Interdum fermentum.</p>
-                            </div>
-                            <div class="tf-product-info-variant-picker">
-                                <div class="variant-picker-item">
-                                    <div class="variant-picker-label">
-                                        Color: <span class="fw-6 variant-picker-label-value">Orange</span>
-                                    </div>
-                                    <div class="variant-picker-values">
-                                        <input id="values-orange-1" type="radio" name="color-1" checked>
-                                        <label class="hover-tooltip radius-60" for="values-orange-1" data-value="Orange">
-                                            <span class="btn-checkbox bg-color-orange"></span>
-                                            <span class="tooltip">Orange</span>
-                                        </label>
-                                        <input id="values-black-1" type="radio" name="color-1">
-                                        <label class=" hover-tooltip radius-60" for="values-black-1" data-value="Black">
-                                            <span class="btn-checkbox bg-color-black"></span>
-                                            <span class="tooltip">Black</span>
-                                        </label>
-                                        <input id="values-white-1" type="radio" name="color-1">
-                                        <label class="hover-tooltip radius-60" for="values-white-1" data-value="White">
-                                            <span class="btn-checkbox bg-color-white"></span>
-                                            <span class="tooltip">White</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="variant-picker-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="variant-picker-label">
-                                            Size: <span class="fw-6 variant-picker-label-value">S</span>
-                                        </div>
-                                        <div class="find-size btn-choose-size fw-6">Find your size</div>
-                                    </div>
-                                    <div class="variant-picker-values">
-                                        <input type="radio" name="size-1" id="values-s-1" checked>
-                                        <label class="style-text" for="values-s-1" data-value="S">
-                                            <p>S</p>
-                                        </label>
-                                        <input type="radio" name="size-1" id="values-m-1">
-                                        <label class="style-text" for="values-m-1" data-value="M">
-                                            <p>M</p>
-                                        </label>
-                                        <input type="radio" name="size-1" id="values-l-1">
-                                        <label class="style-text" for="values-l-1" data-value="L">
-                                            <p>L</p>
-                                        </label>
-                                        <input type="radio" name="size-1" id="values-xl-1">
-                                        <label class="style-text" for="values-xl-1" data-value="XL">
-                                            <p>XL</p>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tf-product-info-quantity">
-                                <div class="quantity-title fw-6">Quantity</div>
-                                <div class="wg-quantity">
-                                    <span class="btn-quantity minus-btn">-</span>
-                                    <input type="text" name="number" value="1">
-                                    <span class="btn-quantity plus-btn">+</span>
-                                </div>
-                            </div>
-                            <div class="tf-product-info-buy-button">
-                                <form class="">
-                                    <a href="javascript:void(0);" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart"><span>Add to cart -&nbsp;</span><span class="tf-qty-price">$8.00</span></a>
-                                    <a href="javascript:void(0);" class="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip">Add to Wishlist</span>
-                                        <span class="icon icon-delete"></span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="tf-product-btn-wishlist hover-tooltip box-icon bg_white compare btn-icon-action">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Add to Compare</span>
-                                        <span class="icon icon-check"></span>
-                                    </a>
-                                    <div class="w-100">
-                                        <a href="#" class="btns-full">Buy with <img src="images/payments/paypal.png" alt=""></a>
-                                        <a href="#" class="payment-more-option">More payment options</a>
-                                    </div>
-                                </form>
-                            </div>
-                            <div>
-                                <a href="product-detail.html" class="tf-btn fw-6 btn-line">View full details<i class="icon icon-arrow1-top-left"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /modal quick_view -->
-
-    <!-- modal find_size -->
-    <div class="modal fade modalDemo tf-product-modal" id="find_size">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="header">
-                    <div class="demo-title">Size chart</div>
-                    <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                </div>
-                <div class="tf-rte">
-                    <div class="tf-table-res-df">
-                        <h6>Size guide</h6>
-                        <table class="tf-sizeguide-table">
-                            <thead>
-                                <tr>
-                                    <th>Size</th>
-                                    <th>US</th>
-                                    <th>Bust</th>
-                                    <th>Waist</th>
-                                    <th>Low Hip</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>XS</td>
-                                    <td>2</td>
-                                    <td>32</td>
-                                    <td>24 - 25</td>
-                                    <td>33 - 34</td>
-                                </tr>
-                                <tr>
-                                    <td>S</td>
-                                    <td>4</td>
-                                    <td>34 - 35</td>
-                                    <td>26 - 27</td>
-                                    <td>35 - 26</td>
-                                </tr>
-                                <tr>
-                                    <td>M</td>
-                                    <td>6</td>
-                                    <td>36 - 37</td>
-                                    <td>28 - 29</td>
-                                    <td>38 - 40</td>
-                                </tr>
-                                <tr>
-                                    <td>L</td>
-                                    <td>8</td>
-                                    <td>38 - 29</td>
-                                    <td>30 - 31</td>
-                                    <td>42 - 44</td>
-                                </tr>
-                                <tr>
-                                    <td>XL</td>
-                                    <td>10</td>
-                                    <td>40 - 41</td>
-                                    <td>32 - 33</td>
-                                    <td>45 - 47</td>
-                                </tr>
-                                <tr>
-                                    <td>XXL</td>
-                                    <td>12</td>
-                                    <td>42 - 43</td>
-                                    <td>34 - 35</td>
-                                    <td>48 - 50</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tf-page-size-chart-content">
-                        <div>
-                            <h6>Measuring Tips</h6>
-                            <div class="title">Bust</div>
-                            <p>Measure around the fullest part of your bust.</p>
-                            <div class="title">Waist</div>
-                            <p>Measure around the narrowest part of your torso.</p>
-                            <div class="title">Low Hip</div>
-                            <p class="mb-0">With your feet together measure around the fullest part of your hips/rear.
-                            </p>
-                        </div>
-                        <div>
-                            <img class="sizechart lazyload" data-src="images/shop/products/size_chart2.jpg" src="images/shop/products/size_chart2.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /modal find_size -->
 
     <!-- Javascript -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
@@ -2296,6 +1472,53 @@
         };
 
         var AUTOHIDE = Boolean(0);
+    </script>
+    
+    <script>
+        $(document).ready(function () {
+            $(".increase").off("click").on("click", function () {
+                var productItem = $(this).closest(".tf-cart-item");
+                var quantityInput = productItem.find("input[name='quantity']");
+                var currentQuantity = parseInt(quantityInput.val()) || 0;
+
+                quantityInput.val(currentQuantity + 1);
+                updateTotalPrice(null, productItem);
+            });
+
+            $(".decrease").off("click").on("click", function () {
+                var productItem = $(this).closest(".tf-cart-item");
+                var quantityInput = productItem.find("input[name='quantity']");
+                var currentQuantity = parseInt(quantityInput.val()) || 0;
+
+                if (currentQuantity > 1) {
+                    quantityInput.val(currentQuantity - 1);
+                    updateTotalPrice(null, productItem);
+                }
+            });
+
+            function updateTotalPrice(price, scope) {
+                var currentPrice = price || parseFloat(scope.find(".tf-variant-item-price .price").text().replace("$", ""));
+                var quantity = parseInt(scope.find("input[name='quantity']").val()) || 0;
+                var totalPrice = currentPrice * quantity;
+
+                scope.find(".tf-cart-item_total .price").text(
+                    "$" + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                );
+            }
+        });
+
+        
+        const calTotalPrice = () => {
+            let listItem = document.querySelectorAll("td  input[class='cart-total']");
+            let total = 0
+            listItem.forEach((e) => {
+                total += Number(e.value);
+            })
+            let totalHtml = document.querySelector(".tf-cart-totals-discounts .total-value")
+            totalHtml.innerHTML = "$" + total
+        } 
+        
+        window.onload = calTotalPrice();
     </script>
 </body>
 
