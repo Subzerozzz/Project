@@ -7,11 +7,13 @@ package controller.user;
 import constant.CommonConstant;
 import dal.implement.CartDAO;
 import dal.implement.CartItemDAO;
+import dal.implement.OrdersDAO;
+import dal.implement.OrderItemDAO;
 import entity.Account;
 import entity.Cart;
 import entity.CartItem;
-import entity.Order;
-import entity.OrderDetails;
+import entity.Orders;
+import entity.OrderItem;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +30,8 @@ import java.util.List;
 public class PaymentController extends HttpServlet {
     CartDAO cartDao = new CartDAO();
     CartItemDAO cartItemDao = new CartItemDAO();
+    OrdersDAO orderDao = new OrdersDAO();
+    OrderItemDAO orderItemDao = new OrderItemDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -132,10 +136,17 @@ public class PaymentController extends HttpServlet {
        
     }
 
-
     private void changeQuantity(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,response);
+        //lay ra CartItemID can thay doi quantity
+        int cartItemID = Integer.parseInt(request.getParameter("id"));
+        //lay ra quantity moi
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        //thay doi trong DB
+        cartItemDao.updateQuantityByCartItemId(cartItemID,quantity);
+        
     }
+
+    
 
 
 

@@ -19,9 +19,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderDetails {
+public class Orders {
     private int id;
-    private int quantity;
-    private int productId;
-    private int orderId;
+    private int cartId;
+    private double totalPrice;
 }

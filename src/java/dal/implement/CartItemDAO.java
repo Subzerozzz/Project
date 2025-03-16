@@ -49,5 +49,25 @@ public class CartItemDAO extends GenericDAO<CartItem> {
                 
         new CartItemDAO().insert(newCartItem);
     }
+
+    public boolean updateQuantityByCartItemId(int cartItemID, int quantity) {
+        String sql = "UPDATE [dbo].[CartItem]\n" +
+                    " SET quantity = ?\n" +
+                    " WHERE id = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("quantity",quantity);
+        parameterMap.put("id", cartItemID);
+        
+        return updateGenericDAO(sql, parameterMap);
+    }
+
+    public boolean deleteProductByID(int id) {
+        String sql = "DELETE FROM [dbo].[CartItem]\n" +
+                        "WHERE id = ?";
+        parameterMap = new LinkedHashMap<>();
+        parameterMap.put("id", id);
+        
+        return deleteGenericDAO(sql, parameterMap);
+    }
     
 }

@@ -507,7 +507,7 @@ public abstract class GenericDAO<T> extends DBContext {
             if (resultSet.next()) {
                 id = resultSet.getInt(1);
             }
-            System.err.println("insertGenericDAO: " + sqlBuilder.toString());
+            System.out.println("insertGenericDAO: " + sqlBuilder.toString());
             // Xác nhận giao dịch thành công
             connection.commit();
         } catch (SQLException e) {

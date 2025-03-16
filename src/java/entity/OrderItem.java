@@ -4,9 +4,6 @@
  */
 package entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,10 +19,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Order {
+public class OrderItem {
     private int id;
-    private int amount;
-    private int accountId;
-    private Timestamp createAt;
-    List<OrderDetails> listOrderDetails = new ArrayList<>();
+    private int orderID;
+    private int productID;
+    private int quantity;
 }

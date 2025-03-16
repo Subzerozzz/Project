@@ -11,13 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/homepage/product-details.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/controller/user/PaymentController.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/controller/authen/AuthenticationController.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/web/view/user/payment/cart.jsp</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/entity/Cart.java</file>
-            <file>file:/C:/Users/User/Documents/NetBeansProjects/Project/src/java/entity/CartItem.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

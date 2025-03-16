@@ -27,7 +27,7 @@
    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/font-icons.css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/swiper-bundle.min.css">
-   <link rel="stylesheet" href="css/animate.css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/sibforms.com/forms/end-form/build/sib-styles.css">
    <link rel="stylesheet"type="text/css" href="${pageContext.request.contextPath}/css/styles.css"/>
 
@@ -121,15 +121,18 @@
                                                                         </svg>
                                                                     </span>
                                                                     <form action="payment?action=change-quantity" method="POST">
-                                                                        <input type="hidden" name="id" value="${p.product_id}"/>
+                                                                        <input type="hidden" name="id" value="${od.id}"/>
                                                                         <input type="text" name="quantity" value="${od.quantity}" onchange="return this.closest('form').submit()">
                                                                     </form>
                                                                     
-                                                                    <span class="btn-quantity increase">
-                                                                        <svg class="d-inline-block" width="9" height="9" viewBox="0 0 9 9" fill="currentColor">
-                                                                            <path d="M9 5.14286H5.14286V9H3.85714V5.14286H0V3.85714H3.85714V0H5.14286V3.85714H9V5.14286Z"></path>
-                                                                        </svg>
-                                                                    </span>
+                                                                    
+                                                                     <span class="btn-quantity increase" onclick="return this.closest('form').submit()">
+                                                                         <svg class="d-inline-block" width="9" height="9" viewBox="0 0 9 9" fill="currentColor">
+                                                                                <path d="M9 5.14286H5.14286V9H3.85714V5.14286H0V3.85714H3.85714V0H5.14286V3.85714H9V5.14286Z"></path>
+                                                                          </svg>
+                                                                     </span>
+                                                                   
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -224,10 +227,7 @@
                                         <span>Do you want a gift wrap?</span> Only <span class="fw-5">$5.00</span>
                                     </label>
                                 </div>
-                                <div class="tf-cart-totals-discounts">
-                                    <h3>Total</h3>
-                                    <span class="total-value"></span>
-                                </div>
+
                                 <p class="tf-cart-tax">
                                     Taxes and <a href="shipping-delivery.html">shipping</a>  calculated at checkout
                                 </p>
@@ -237,10 +237,22 @@
                                         I agree with the <a href="terms-conditions.html">terms and conditions</a>
                                     </label>
                                 </div>
+                                
                                 <div class="cart-checkout-btn">
-                                    <a href="checkout.html" class="tf-btn w-100 btn-fill animate-hover-btn radius-3 justify-content-center">
-                                        <span>Check out</span>
-                                    </a>
+                                    
+                                    <form action="checkout?action=check-out" method="POST" >
+                                        <div class="tf-cart-totals-discounts">
+                                            <h3>Total</h3>
+                                            <span class="total-value"></span>
+                                        </div>
+                                        <input type="hidden" id="totalprice" type="text" name="total-price" value=""/>
+                                        <input class="inputCheckOut" style="" type="submit" value="Check out" />
+                                    </form>
+                                    <br>
+                                    <form action="checkout" method="GET" >
+                                        
+                                        <input class="inputCheckOut" style="" type="submit" value="View Order" />
+                                    </form>
                                 </div>
                                 <div class="tf-page-cart_imgtrust">
                                     <p class="text-center fw-6">Guarantee Safe Checkout</p>
@@ -1475,37 +1487,73 @@
     </script>
     
     <script>
-        $(document).ready(function () {
-            $(".increase").off("click").on("click", function () {
-                var productItem = $(this).closest(".tf-cart-item");
-                var quantityInput = productItem.find("input[name='quantity']");
-                var currentQuantity = parseInt(quantityInput.val()) || 0;
+//        $(document).ready(function () {
+//            $(".increase").off("click").on("click", function () {
+//                var productItem = $(this).closest(".tf-cart-item");
+//                var quantityInput = productItem.find("input[name='quantity']");
+//                var currentQuantity = parseInt(quantityInput.val()) || 0;
+//                quantityInput.val(currentQuantity + 1);
+//                updateTotalPrice(null, productItem);
+//            });
+//
+//            $(".decrease").off("click").on("click", function () {
+//                var productItem = $(this).closest(".tf-cart-item");
+//                var quantityInput = productItem.find("input[name='quantity']");
+//                var currentQuantity = parseInt(quantityInput.val()) || 0;
+//
+//                if (currentQuantity > 1) {
+//                    quantityInput.val(currentQuantity - 1);
+//                    updateTotalPrice(null, productItem);
+//                }
+//            });
+//
+//            function updateTotalPrice(price, scope) {
+//                var currentPrice = price || parseFloat(scope.find(".tf-variant-item-price .price").text().replace("$", ""));
+//                var quantity = parseInt(scope.find("input[name='quantity']").val()) || 0;
+//                var totalPrice = currentPrice * quantity;
+//
+//                scope.find(".tf-cart-item_total .price").text(
+//                    "$" + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+//                );
+//            }
+//        });
 
-                quantityInput.val(currentQuantity + 1);
-                updateTotalPrice(null, productItem);
-            });
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(".increase").forEach(button => {
+                    button.addEventListener("click", function () {
+                        let productItem = this.closest(".tf-cart-item");
+                        let quantityInput = productItem.querySelector("input[name='quantity']");
+                        let currentQuantity = parseInt(quantityInput.value) || 0;
+                        quantityInput.value = currentQuantity + 1;
+                        
+                        quantityInput.dispatchEvent(new Event('change'));
+                        updateTotalPrice(null, productItem);
+                    });
+                });
 
-            $(".decrease").off("click").on("click", function () {
-                var productItem = $(this).closest(".tf-cart-item");
-                var quantityInput = productItem.find("input[name='quantity']");
-                var currentQuantity = parseInt(quantityInput.val()) || 0;
+                document.querySelectorAll(".decrease").forEach(button => {
+                    button.addEventListener("click", function () {
+                        let productItem = this.closest(".tf-cart-item");
+                        let quantityInput = productItem.querySelector("input[name='quantity']");
+                        let currentQuantity = parseInt(quantityInput.value) || 0;
+                        if (currentQuantity > 1) {
+                            quantityInput.value = currentQuantity - 1;
+                            quantityInput.dispatchEvent(new Event('change'));
+                            updateTotalPrice(null, productItem);
+                        }
+                    });
+                });
 
-                if (currentQuantity > 1) {
-                    quantityInput.val(currentQuantity - 1);
-                    updateTotalPrice(null, productItem);
+                function updateTotalPrice(price, scope) {
+                    let currentPrice = price || parseFloat(scope.querySelector(".tf-variant-item-price .price").textContent.replace("$", ""));
+                    let quantity = parseInt(scope.querySelector("input[name='quantity']").value) || 0;
+                    let totalPrice = currentPrice * quantity;
+
+                    scope.querySelector(".tf-cart-item_total .price").textContent =
+                        "$" + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
             });
 
-            function updateTotalPrice(price, scope) {
-                var currentPrice = price || parseFloat(scope.find(".tf-variant-item-price .price").text().replace("$", ""));
-                var quantity = parseInt(scope.find("input[name='quantity']").val()) || 0;
-                var totalPrice = currentPrice * quantity;
-
-                scope.find(".tf-cart-item_total .price").text(
-                    "$" + totalPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                );
-            }
-        });
 
         
         const calTotalPrice = () => {
@@ -1516,11 +1564,26 @@
             })
             let totalHtml = document.querySelector(".tf-cart-totals-discounts .total-value")
             totalHtml.innerHTML = "$" + total
+            let totalPrice = document.querySelector("#totalprice")
+            totalPrice.value = total
         } 
+        
+        
         
         window.onload = calTotalPrice();
     </script>
+    <style>
+        .inputCheckOut{
+            width: 400px;
+            padding:10px;
+            border-radius: 10px;
+            color:white;
+            background-color: black;
+        }
+    </style>
 </body>
+    
+    
 
 
 <!-- Mirrored from themesflat.co/html/ecomus/view-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Feb 2025 03:24:05 GMT -->
